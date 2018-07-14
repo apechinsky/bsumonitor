@@ -1,12 +1,8 @@
 package com.anton.bgu.parser;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import org.jsoup.nodes.Document;
@@ -14,9 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.anton.bgu.model.Faculty;
-import com.anton.bgu.model.Range;
 import com.anton.bgu.model.Speciality;
-import static com.anton.bgu.parser.ParserUtils.RANGES;
 import static com.anton.bgu.parser.ParserUtils.getIntList;
 import static com.anton.bgu.parser.ParserUtils.skipElements;
 
@@ -25,21 +19,36 @@ import static com.anton.bgu.parser.ParserUtils.skipElements;
  */
 public class FreeRequestListPageParser {
 
+    /**
+     * Селектор элемента (td) с именем факультета. С этих строк начинается парсинг данных факультетов.
+     */
+    private static final String FACULTY_CSS_SELECTOR = "td.fl";
+
+    /**
+     * Селектор элемента (td) с именем специальности. После этого элемента идут данные по плану приема и заявкам.
+     */
+    private static final String SPECIALITY_CSS_SELECTOR = "td.vl";
+
+    /**
+     * Индекс первой строки с данными (имя специальности + заявки) начиная со строки с именем факультата.
+     */
+    private static final int DATA_ROW_INDEX = 5;
+
     public List<Faculty> parse(Document document) {
-        Elements elements = document.select("td.fl");
+        Elements elements = document.select(FACULTY_CSS_SELECTOR);
 
         return StreamSupport.stream(elements.spliterator(), false)
             .map(this::parseFaculty)
             .collect(Collectors.toList());
     }
 
-    public Faculty parseFaculty(Element facultyElement) {
-//        Element rangesElement = skipElements(facultyElement.parent(), 4);
+    public Faculty parseFaculty(Element element) {
+        ParserUtils.checkFacultyElement(element);
 
         List<Speciality> specialities = new ArrayList<>();
 
-        for (int index = 5; ; index++) {
-            Element specialityRow = skipElements(facultyElement.parent(), index);
+        for (int index = DATA_ROW_INDEX; ; index++) {
+            Element specialityRow = skipElements(element.parent(), index);
 
             Speciality speciality = tryParseSpeciality(specialityRow);
 
@@ -50,7 +59,7 @@ public class FreeRequestListPageParser {
             specialities.add(speciality);
         }
 
-        return new Faculty(facultyElement.text(), specialities);
+        return new Faculty(element.text(), specialities);
     }
 
     public Speciality tryParseSpeciality(Element specialityRow) {
@@ -59,7 +68,7 @@ public class FreeRequestListPageParser {
             return null;
         }
 
-        Element specialityNameElement = specialityRow.selectFirst("td.vl");
+        Element specialityNameElement = specialityRow.selectFirst(SPECIALITY_CSS_SELECTOR);
 
         if (specialityNameElement == null) {
             return null;
@@ -78,14 +87,7 @@ public class FreeRequestListPageParser {
         speciality.setRequestNoExam(values.get(5));
         speciality.setRequestNoConcurs(values.get(6));
 
-        List<Integer> rangesValues = values.subList(7, 36);
-
-        Map<Range, Integer> requests = IntStream.range(0, 29).boxed()
-            .collect(Collectors.toMap(RANGES::get, rangesValues::get));
-        Map<Range, Integer> sortedRequests = new TreeMap<>(Comparator.reverseOrder());
-        sortedRequests.putAll(requests);
-
-        speciality.setFreeRequests(sortedRequests);
+        speciality.setFreeRequests(ParserUtils.mapToRanges(values.subList(7, 36)));
 
         return speciality;
     }

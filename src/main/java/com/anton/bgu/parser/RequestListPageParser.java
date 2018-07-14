@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.jsoup.nodes.Document;
 
 import com.anton.bgu.model.Faculty;
-import com.anton.bgu.model.Range;
 import com.anton.bgu.model.Requests;
 import com.anton.bgu.model.Speciality;
 
@@ -28,7 +27,7 @@ public class RequestListPageParser {
 
         for (Faculty freeFaculty : freeFaculties) {
             Optional<Faculty> payFaculty =
-                payFaculties.stream().filter(f -> f.isSame(freeFaculty))
+                payFaculties.stream().filter(f -> f.equals(freeFaculty))
                     .findFirst();
 
             if (payFaculty.isPresent()) {

@@ -26,11 +26,11 @@ public class MonitoringTest {
 
     @Test
     public void all() throws Exception {
-//        Document free = loadDocument("/free.html");
-//        Document pay = loadDocument("/pay.html");
+        Document free = loadDocument("/free.html");
+        Document pay = loadDocument("/pay.html");
         
-        Document free = loadDocument(new URL(FREE_URL));
-        Document pay = loadDocument(new URL(PAY_URL));
+//        Document free = loadDocument(new URL(FREE_URL));
+//        Document pay = loadDocument(new URL(PAY_URL));
 
         Requests requests = new RequestListPageParser().parse(free, pay);
 

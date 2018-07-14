@@ -7,17 +7,29 @@ import org.srplib.validation.DefaultValidationError;
 import org.srplib.validation.ValidationErrors;
 
 /**
+ * Специальность.
+ *
  * @author Q-APE
  */
 public class Speciality {
 
     private String name;
 
+    /**
+     * План приема на бюджет
+     */
     private int planFree;
 
+    /**
+     * Целевики-контрактники. Вроде как входит в {@link #planFree}
+     */
     private int planContract;
 
+    /**
+     * План приема на платное
+     */
     private int planPay;
+
 
     private int requestFreeTotal;
 

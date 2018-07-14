@@ -1,10 +1,15 @@
 package com.anton.bgu.parser;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jsoup.nodes.Element;
+import org.srplib.contract.Argument;
 
 import com.anton.bgu.model.Range;
 
@@ -29,5 +34,24 @@ public class ParserUtils {
 
     public static void log(Object pattern, Object... arguments) {
         System.out.printf(pattern + "%n", arguments);
+    }
+
+    public static void checkFacultyElement(Element element) {
+        Argument.checkTrue(element.tagName().equals("td"), "Faculty element should be 'td', Got: '%s'", element.tagName());
+        Argument.checkTrue(element.attr("class").equals("fl"), "Faculty should have attribute 'class=fl'");
+    }
+
+    /**
+     * Создает map с элементами [range, value] на основе списка значений (value)
+     */
+    public static Map<Range, Integer> mapToRanges(List<Integer> rangedValues) {
+
+        Map<Range, Integer> requests = IntStream.range(0, rangedValues.size()).boxed()
+            .collect(Collectors.toMap(RANGES::get, rangedValues::get));
+
+        Map<Range, Integer> sortedRequests = new TreeMap<>(Comparator.reverseOrder());
+        sortedRequests.putAll(requests);
+
+        return sortedRequests;
     }
 }

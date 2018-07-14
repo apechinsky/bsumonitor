@@ -1,9 +1,12 @@
 package com.anton.bgu.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * Факультет.
+ *
  * @author Q-APE
  */
 public class Faculty {
@@ -41,6 +44,30 @@ public class Faculty {
         specialities.forEach(Speciality::validate);
     }
 
+    public Optional<Speciality> getSpeciality(String name) {
+        return specialities.stream()
+            .filter(speciality -> speciality.getName().equals(name))
+            .findFirst();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Faculty faculty = (Faculty) o;
+        return Objects.equals(name, faculty.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Faculty{");
@@ -50,13 +77,4 @@ public class Faculty {
         return sb.toString();
     }
 
-    public Optional<Speciality> getSpeciality(String name) {
-        return specialities.stream()
-            .filter(speciality -> speciality.getName().equals(name))
-            .findFirst();
-    }
-
-    public boolean isSame(Faculty faculty) {
-        return name.equalsIgnoreCase(faculty.getName());
-    }
 }
