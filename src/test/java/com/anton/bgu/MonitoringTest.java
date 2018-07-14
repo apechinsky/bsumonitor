@@ -6,17 +6,13 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import com.anton.bgu.model.Faculty;
 import com.anton.bgu.model.RequestsModel;
-import com.anton.bgu.parser.FreeRequestListPageParser;
-import com.anton.bgu.parser.PayRequestListPageParser;
 import com.anton.bgu.parser.RequestListPageParser;
 import com.anton.bgu.view.TextModelView;
 
@@ -50,24 +46,6 @@ public class MonitoringTest {
         String render = new TextModelView().render(requestsModel);
 
         System.out.println(render);
-    }
-
-    @Test
-    public void free() throws Exception {
-        Document document = loadDocument("/free.html");
-
-        List<Faculty> faculties = new FreeRequestListPageParser().parse(document);
-
-        new TextModelView().render(new RequestsModel(faculties));
-    }
-
-    @Test
-    public void pay() throws Exception {
-        Document document = loadDocument("/pay.html");
-
-        List<Faculty> faculties = new PayRequestListPageParser().parse(document);
-
-        new TextModelView().render(new RequestsModel(faculties));
     }
 
     private Document loadDocument(String resource) throws IOException {

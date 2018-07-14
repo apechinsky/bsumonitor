@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.jsoup.nodes.Element;
+import org.srplib.contract.Assert;
+
 /**
  * Факультет.
  *
@@ -13,15 +16,27 @@ public class Faculty {
 
     private String name;
 
+    private Element element;
+
     private List<Speciality> specialities;
 
-    public Faculty(String name, List<Speciality> specialities) {
+    public Faculty(String name, List<Speciality> specialities, Element element) {
         this.name = name;
         this.specialities = specialities;
+        this.element = element;
+    }
+
+    public Faculty(String name, List<Speciality> specialities) {
+        this(name, specialities, null);
     }
 
     public String getName() {
         return name;
+    }
+
+    public Element getElement() {
+        Assert.checkNotNull(element, "element was not provided!");
+        return element;
     }
 
     public List<Speciality> getSpecialities() {

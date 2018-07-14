@@ -9,9 +9,4 @@ public interface ModelView {
 
     String render(RequestsModel model);
 
-
-    static void log(Object pattern, Object... arguments) {
-        System.out.printf(pattern + "%n", arguments);
-    }
-
 }
