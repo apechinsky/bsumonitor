@@ -1,0 +1,18 @@
+apply plugin: "java"
+
+repositories {
+    mavenCentral()
+}
+
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.11.3'
+    compile 'org.srplib:srp-contract:0.8.3'
+    compile 'org.srplib:srp-validation:0.8.3'
+
+    testCompile 'junit:junit:4.12'
+}
