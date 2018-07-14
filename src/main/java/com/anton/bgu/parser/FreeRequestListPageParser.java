@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import com.anton.bgu.model.Faculty;
 import com.anton.bgu.model.Speciality;
 import static com.anton.bgu.parser.ParserUtils.getIntList;
+import static com.anton.bgu.parser.ParserUtils.mapToRanges;
 import static com.anton.bgu.parser.ParserUtils.skipElements;
 
 /**
@@ -75,6 +76,7 @@ public class FreeRequestListPageParser {
         }
 
         Speciality speciality = new Speciality();
+        speciality.setElement(specialityRow);
         speciality.setName(specialityNameElement.text());
         List<Integer> values = getIntList(skipElements(specialityNameElement, 1), 36);
 
@@ -87,7 +89,7 @@ public class FreeRequestListPageParser {
         speciality.setRequestNoExam(values.get(5));
         speciality.setRequestNoConcurs(values.get(6));
 
-        speciality.setFreeRequests(ParserUtils.mapToRanges(values.subList(7, 36)));
+        speciality.setFreeRequests(mapToRanges(values.subList(7, 36)));
 
         return speciality;
     }

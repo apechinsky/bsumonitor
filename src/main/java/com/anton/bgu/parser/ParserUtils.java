@@ -3,6 +3,7 @@ package com.anton.bgu.parser;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Argument;
 
+import com.anton.bgu.model.Faculty;
 import com.anton.bgu.model.Range;
 
 /**
@@ -53,5 +55,11 @@ public class ParserUtils {
         sortedRequests.putAll(requests);
 
         return sortedRequests;
+    }
+
+    public static Optional<Faculty> findFaculty(List<Faculty> faculties, Faculty faculty) {
+        return faculties.stream()
+            .filter(f -> f.equals(faculty))
+            .findFirst();
     }
 }

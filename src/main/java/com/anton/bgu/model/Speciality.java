@@ -3,6 +3,7 @@ package com.anton.bgu.model;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.jsoup.nodes.Element;
 import org.srplib.validation.DefaultValidationError;
 import org.srplib.validation.ValidationErrors;
 
@@ -14,6 +15,8 @@ import org.srplib.validation.ValidationErrors;
 public class Speciality {
 
     private String name;
+
+    private Element element;
 
     /**
      * План приема на бюджет
@@ -217,4 +220,12 @@ public class Speciality {
         return sb.toString();
     }
 
+    public Element getElement() {
+        return element;
+    }
+
+    public Speciality setElement(Element element) {
+        this.element = element;
+        return this;
+    }
 }

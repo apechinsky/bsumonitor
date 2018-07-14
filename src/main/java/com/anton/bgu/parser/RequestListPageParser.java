@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.jsoup.nodes.Document;
 
 import com.anton.bgu.model.Faculty;
-import com.anton.bgu.model.Requests;
+import com.anton.bgu.model.RequestsModel;
 import com.anton.bgu.model.Speciality;
 
 /**
@@ -15,20 +15,20 @@ import com.anton.bgu.model.Speciality;
  */
 public class RequestListPageParser {
 
-    public Requests parse(Document free, Document pay) {
+    public RequestsModel parse(Document free, Document pay) {
         List<Faculty> freeFaculties = new FreeRequestListPageParser().parse(free);
         List<Faculty> payFaculties = new PayRequestListPageParser().parse(pay);
 
-        return new Requests(merge(freeFaculties, payFaculties));
+        List<Faculty> faculties = merge(freeFaculties, payFaculties);
+
+        return new RequestsModel(free, faculties);
     }
 
     private List<Faculty> merge(List<Faculty> freeFaculties, List<Faculty> payFaculties) {
         ArrayList<Faculty> result = new ArrayList<>();
 
         for (Faculty freeFaculty : freeFaculties) {
-            Optional<Faculty> payFaculty =
-                payFaculties.stream().filter(f -> f.equals(freeFaculty))
-                    .findFirst();
+            Optional<Faculty> payFaculty = ParserUtils.findFaculty(payFaculties, freeFaculty);
 
             if (payFaculty.isPresent()) {
                 result.add(merge(freeFaculty, payFaculty.get()));

@@ -11,6 +11,9 @@ import org.jsoup.select.Elements;
 
 import com.anton.bgu.model.Faculty;
 import com.anton.bgu.model.Speciality;
+import static com.anton.bgu.parser.ParserUtils.getIntList;
+import static com.anton.bgu.parser.ParserUtils.mapToRanges;
+import static com.anton.bgu.parser.ParserUtils.skipElements;
 
 /**
  * @author Q-APE
@@ -46,7 +49,7 @@ public class PayRequestListPageParser {
         List<Speciality> specialities = new ArrayList<>();
 
         for (int index = DATA_ROW_INDEX; ; index++) {
-            Element specialityRow = ParserUtils.skipElements(element.parent(), index);
+            Element specialityRow = skipElements(element.parent(), index);
 
             Speciality speciality = tryParseSpeciality(specialityRow);
 
@@ -74,7 +77,7 @@ public class PayRequestListPageParser {
 
         Speciality speciality = new Speciality();
         speciality.setName(specialityNameElement.text());
-        List<Integer> values = ParserUtils.getIntList(ParserUtils.skipElements(specialityNameElement, 1), 33);
+        List<Integer> values = getIntList(skipElements(specialityNameElement, 1), 33);
 
         speciality.setPlanFree(0);
         speciality.setPlanContract(0);
@@ -85,7 +88,7 @@ public class PayRequestListPageParser {
         speciality.setRequestNoExam(values.get(2));
         speciality.setRequestNoConcurs(values.get(3));
 
-        speciality.setPayRequests(ParserUtils.mapToRanges(values.subList(4, 33)));
+        speciality.setPayRequests(mapToRanges(values.subList(4, 33)));
 
         return speciality;
     }
