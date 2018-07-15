@@ -29,7 +29,7 @@ public class PaySpecialityParser implements SpecialityParser {
         }
 
         Speciality speciality = new Speciality();
-        speciality.setElement(element);
+        speciality.setElement(specialityNameElement);
 
         speciality.setName(specialityNameElement.text());
 

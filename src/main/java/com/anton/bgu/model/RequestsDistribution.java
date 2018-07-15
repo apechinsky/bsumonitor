@@ -72,10 +72,20 @@ public class RequestsDistribution {
     @Override
     public String toString() {
         return requests.toString();
-//        requests.entrySet().stream()
-//            .map(Object::toString)
-//        StringBuilder sb = new StringBuilder();
-//
-//        return sb.toString();
+    }
+
+    public Range getPassRange(int planCount, int privilegedCount) {
+
+        int sum = privilegedCount;
+
+        for (Map.Entry<Range, Integer> entry : requests.entrySet()) {
+            sum += entry.getValue();
+            if (sum >= planCount) {
+                return entry.getKey();
+            }
+        }
+
+        return Range.zero();
+
     }
 }

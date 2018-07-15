@@ -45,15 +45,27 @@ public class Faculty {
         return specialities;
     }
 
-    public int getPlanTotal() {
+    public int getPlanFree() {
         return specialities.stream()
             .mapToInt(Speciality::getPlanFree)
             .sum();
     }
 
-    public int getRequestTotal() {
+    public int getPlanPay() {
+        return specialities.stream()
+            .mapToInt(Speciality::getPlanPay)
+            .sum();
+    }
+
+    public int getRequestFree() {
         return specialities.stream()
             .mapToInt(Speciality::getRequestFreeTotal)
+            .sum();
+    }
+
+    public int getRequestPay() {
+        return specialities.stream()
+            .mapToInt(Speciality::getRequestPayTotal)
             .sum();
     }
 
@@ -69,12 +81,16 @@ public class Faculty {
         return distribution;
     }
 
+    public int getPrivilegedRequests() {
+        return specialities.stream().mapToInt(Speciality::getPrivilegedRequests).sum();
+    }
+
     public Range getFreePass() {
-        return Range.zero();
+        return getFreeRequests().getPassRange(getPlanFree(), getPrivilegedRequests());
     }
 
     public Range getPayPass() {
-        return Range.zero();
+        return getFreeRequests().getPassRange(getPlanPay(), 0);
     }
 
     public void validate() {
@@ -82,12 +98,12 @@ public class Faculty {
 
         specialities.forEach(speciality -> speciality.validate(errors));
 
-        if (getRequestTotal() != getFreeRequests().getRequestsCount()) {
+        if (getRequestFree() != getFreeRequests().getRequestsCount() + getPrivilegedRequests()) {
             errors.add(new DefaultValidationError(String.format(
                 "Бюджет. '%s'\n " +
                     "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
                     "количеством поданных заявок (%d).",
-                getName(), getRequestTotal(), getFreeRequests().getRequestsCount())));
+                getName(), getRequestFree(), getFreeRequests().getRequestsCount() + getPrivilegedRequests())));
 
         }
 

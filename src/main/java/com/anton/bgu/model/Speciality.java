@@ -194,7 +194,7 @@ public class Speciality {
         return payRequests.getRequestsCount();
     }
 
-    private int getPrivilegedRequests() {
+    public int getPrivilegedRequests() {
         return requestContract + requestNoExam + requestNoConcurs;
     }
 
@@ -207,7 +207,7 @@ public class Speciality {
                 "количеством поданных заявок (%d).", getName(), getRequestFreeTotal(), getPrivilegedRequests() + getRangedFreeRequests())));
         }
 
-        if (getRequestPayTotal() != getPrivilegedRequests() + getRangedPayRequests()) {
+        if (getRequestPayTotal() != getRangedPayRequests()) {
             errors.add(new DefaultValidationError(String.format(
                 "Платное. '%s'\n " +
                 "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +

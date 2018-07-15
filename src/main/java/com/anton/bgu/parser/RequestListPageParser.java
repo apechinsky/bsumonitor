@@ -82,7 +82,7 @@ public class RequestListPageParser {
                 result.add(merge(freeFaculty, payFaculty.get()));
             }
             else {
-                ParserUtils.log("Не найден факультет '%s'", freeFaculty.getName());
+                ParserUtils.log("Не найден факультет '%s' в платном плане.", freeFaculty.getName());
             }
 
         }
@@ -101,7 +101,7 @@ public class RequestListPageParser {
                 freeSpeciality.setRequestPayTotal(paySpeciality.get().getRequestPayTotal());
             }
             else {
-                ParserUtils.log("%s. Не найдена специальность '%s'", freeFaculty.getName(), freeSpeciality.getName());
+                ParserUtils.log("%s. Не найдена специальность '%s' в платном плане.", freeFaculty.getName(), freeSpeciality.getName());
             }
         }
 

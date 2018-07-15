@@ -32,7 +32,7 @@ public class ModifySourceHtmlView implements ModelView {
     private void processFaculty(Faculty faculty) {
         Element element = faculty.getElement();
 
-        if (faculty.getRequestTotal() > faculty.getPlanTotal()) {
+        if (faculty.getRequestFree() > faculty.getPlanFree()) {
             element.attributes().put("style", "color: red; font-size: 2em");
         }
 
