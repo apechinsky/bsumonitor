@@ -62,4 +62,9 @@ public class ParserUtils {
             .filter(f -> f.equals(faculty))
             .findFirst();
     }
+
+    public static int asInt(Element element) {
+        String text = element.text().trim();
+        return text.isEmpty() ? 0 : Integer.valueOf(text);
+    }
 }

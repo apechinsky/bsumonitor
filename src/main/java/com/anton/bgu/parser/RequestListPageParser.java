@@ -98,6 +98,7 @@ public class RequestListPageParser {
 
             if (paySpeciality.isPresent()) {
                 freeSpeciality.setPayRequests(paySpeciality.get().getPayRequests());
+                freeSpeciality.setRequestPayTotal(paySpeciality.get().getRequestPayTotal());
             }
             else {
                 ParserUtils.log("%s. Не найдена специальность '%s'", freeFaculty.getName(), freeSpeciality.getName());

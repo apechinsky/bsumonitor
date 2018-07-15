@@ -34,9 +34,10 @@ public class Speciality {
     private int planPay;
 
 
-    private int requestFreeTotal;
-
     private int requestPayTotal;
+
+
+    private int requestFreeTotal;
 
     private int requestContract;
 
@@ -54,6 +55,15 @@ public class Speciality {
 
     public Speciality setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Element getElement() {
+        return element;
+    }
+
+    public Speciality setElement(Element element) {
+        this.element = element;
         return this;
     }
 
@@ -84,6 +94,10 @@ public class Speciality {
         return this;
     }
 
+    public int getPlanTotal() {
+        return getPlanFree() + getPlanPay();
+    }
+
     public int getRequestFreeTotal() {
         return requestFreeTotal;
     }
@@ -99,6 +113,10 @@ public class Speciality {
 
     public void setRequestPayTotal(int requestPayTotal) {
         this.requestPayTotal = requestPayTotal;
+    }
+
+    public int getRequestsTotal() {
+        return getRequestFreeTotal() + getRequestPayTotal();
     }
 
     public int getRequestContract() {
@@ -220,12 +238,4 @@ public class Speciality {
         return sb.toString();
     }
 
-    public Element getElement() {
-        return element;
-    }
-
-    public Speciality setElement(Element element) {
-        this.element = element;
-        return this;
-    }
 }

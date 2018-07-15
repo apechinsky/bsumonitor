@@ -21,7 +21,6 @@ public class TextModelView implements ModelView {
 
     private void printFaculties(List<Faculty> faculties) {
         for (Faculty faculty : faculties) {
-
             printFaculty(faculty);
 
             render("================================\n");

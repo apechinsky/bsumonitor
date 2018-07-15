@@ -1,6 +1,7 @@
 package com.anton.bgu.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -53,6 +54,22 @@ public class Faculty {
         return specialities.stream()
             .mapToInt(Speciality::getRequestFreeTotal)
             .sum();
+    }
+
+    public Map<Range, Integer> getFreeRequests() {
+//        specialities.forEach(speciality -> {
+//            speciality
+//        });
+//        return freeRequests;
+        return null;
+    }
+
+    public Range getFreePass() {
+        return Range.zero();
+    }
+
+    public Range getPayPass() {
+        return Range.zero();
     }
 
     public void validate() {

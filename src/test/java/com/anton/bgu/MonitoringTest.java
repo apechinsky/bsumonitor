@@ -5,15 +5,17 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 import org.junit.Test;
 
 import com.anton.bgu.model.RequestsModel;
 import com.anton.bgu.parser.RequestListPageParser;
+import com.anton.bgu.view.ModifySourceHtmlView;
 import com.anton.bgu.view.TextModelView;
 
 /**
@@ -27,10 +29,19 @@ public class MonitoringTest {
     @Test
     public void modify() throws Exception {
         Document free = loadDocument("/free.html");
-        Elements fl = free.select("td.fl");
-        fl.attr("class", "aaaa bbbb cccc");
+        Element fl = free.selectFirst("td.fl");
+        fl.attributes().put("class", "aaaa") ;
+        fl.attributes().put("class", "bbbb") ;
 
-        Files.write(Paths.get("modified.html"), free.outerHtml().getBytes(StandardCharsets.UTF_8));
+        writeToFile(free, "modified.html");
+    }
+
+    private Path writeToFile(Document free, String file) throws IOException {
+        return writeToFile(free.outerHtml(), file);
+    }
+
+    private Path writeToFile(String document, String file) throws IOException {
+        return Files.write(Paths.get(file), document.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
@@ -44,8 +55,11 @@ public class MonitoringTest {
         RequestsModel requestsModel = new RequestListPageParser().parse(free, pay);
 
         String render = new TextModelView().render(requestsModel);
-
         System.out.println(render);
+
+        String render2 = new ModifySourceHtmlView().render(requestsModel);
+        writeToFile(render2, "modified.html");
+
     }
 
     private Document loadDocument(String resource) throws IOException {

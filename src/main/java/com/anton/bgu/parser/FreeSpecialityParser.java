@@ -1,15 +1,17 @@
 package com.anton.bgu.parser;
 
-import java.util.List;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Argument;
 
+import com.anton.bgu.model.Range;
 import com.anton.bgu.model.Speciality;
-import static com.anton.bgu.parser.ParserUtils.getIntList;
-import static com.anton.bgu.parser.ParserUtils.mapToRanges;
-import static com.anton.bgu.parser.ParserUtils.skipElements;
+import static com.anton.bgu.parser.ParserUtils.RANGES;
+import static com.anton.bgu.parser.ParserUtils.asInt;
 
 /**
  * @author Q-APE
@@ -29,24 +31,29 @@ public class FreeSpecialityParser implements SpecialityParser {
             return Optional.empty();
         }
 
+        FreeSpecialityElement specialityElement = new FreeSpecialityElement(specialityNameElement);
+
         Speciality speciality = new Speciality();
-        speciality.setElement(element);
+        speciality.setElement(specialityElement.getName());
 
-        speciality.setName(specialityNameElement.text());
+        speciality.setName(specialityElement.getName().text());
 
-        List<Integer> values = getIntList(skipElements(specialityNameElement, 1), DATA_COLUMNS_COUNT);
+        speciality.setPlanFree(asInt(specialityElement.getPlanFree()));
+        speciality.setPlanContract(asInt(specialityElement.getPlanContract()));
+        speciality.setPlanPay(asInt(specialityElement.getPlanPay()));
 
-        speciality.setPlanFree(values.get(0));
-        speciality.setPlanContract(values.get(1));
-        speciality.setPlanPay(values.get(2));
+        speciality.setRequestFreeTotal(asInt(specialityElement.getRequestFreeTotal()));
+        speciality.setRequestContract(asInt(specialityElement.getRequestContract()));
+        speciality.setRequestNoExam(asInt(specialityElement.getRequestNoExam()));
+        speciality.setRequestNoConcurs(asInt(specialityElement.getRequestNoConcurs()));
 
-        speciality.setRequestFreeTotal(values.get(3));
-        speciality.setRequestContract(values.get(4));
-        speciality.setRequestNoExam(values.get(5));
-        speciality.setRequestNoConcurs(values.get(6));
-
-        speciality.setFreeRequests(mapToRanges(values.subList(7, DATA_COLUMNS_COUNT)));
+        Map<Range, Integer> requests = new TreeMap<>(Comparator.reverseOrder());
+        for (int i = 0; i < RANGES.size(); i++) {
+            requests.put(RANGES.get(i), asInt(specialityElement.getRanged(i)));
+        }
+        speciality.setFreeRequests(requests);
 
         return Optional.of(speciality);
     }
+
 }
