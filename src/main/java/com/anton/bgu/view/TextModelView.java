@@ -30,6 +30,9 @@ public class TextModelView implements ModelView {
     private void printFaculty(Faculty faculty) {
         render("%s - %d / %d", faculty.getName(), faculty.getPlanTotal(), faculty.getRequestTotal());
 
+        render("Free Total: " + faculty.getFreeRequests());
+        render("Pay  Total: " + faculty.getPayRequests());
+
 //        faculty.validate();
 
         faculty.getSpecialities().forEach(speciality -> {

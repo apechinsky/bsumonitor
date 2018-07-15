@@ -14,13 +14,14 @@ import org.srplib.contract.Argument;
 
 import com.anton.bgu.model.Faculty;
 import com.anton.bgu.model.Range;
+import com.anton.bgu.model.RequestsDistribution;
 
 /**
  * @author Q-APE
  */
 public class ParserUtils {
 
-    static final List<Range> RANGES = Range.ranges(400, 10, 29);
+    public static final List<Range> RANGES = Range.ranges(400, 10, 29);
 
     public static List<Integer> getIntList(Element startElement, int count) {
         return Stream.iterate(startElement, Element::nextElementSibling)
@@ -41,20 +42,6 @@ public class ParserUtils {
     public static void checkFacultyElement(Element element) {
         Argument.checkTrue(element.tagName().equals("td"), "Faculty element should be 'td', Got: '%s'", element.tagName());
         Argument.checkTrue(element.attr("class").equals("fl"), "Faculty should have attribute 'class=fl'");
-    }
-
-    /**
-     * Создает map с элементами [range, value] на основе списка значений (value)
-     */
-    public static Map<Range, Integer> mapToRanges(List<Integer> rangedValues) {
-
-        Map<Range, Integer> requests = IntStream.range(0, rangedValues.size()).boxed()
-            .collect(Collectors.toMap(RANGES::get, rangedValues::get));
-
-        Map<Range, Integer> sortedRequests = new TreeMap<>(Comparator.reverseOrder());
-        sortedRequests.putAll(requests);
-
-        return sortedRequests;
     }
 
     public static Optional<Faculty> findFaculty(List<Faculty> faculties, Faculty faculty) {

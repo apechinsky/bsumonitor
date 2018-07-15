@@ -8,7 +8,7 @@ import org.srplib.contract.Argument;
 
 import com.anton.bgu.model.Speciality;
 import static com.anton.bgu.parser.ParserUtils.getIntList;
-import static com.anton.bgu.parser.ParserUtils.mapToRanges;
+import static com.anton.bgu.model.RequestsDistribution.fromRequestList;
 import static com.anton.bgu.parser.ParserUtils.skipElements;
 
 /**
@@ -44,7 +44,7 @@ public class PaySpecialityParser implements SpecialityParser {
         speciality.setRequestNoExam(values.get(2));
         speciality.setRequestNoConcurs(values.get(3));
 
-        speciality.setPayRequests(mapToRanges(values.subList(4, 33)));
+        speciality.setPayRequests(fromRequestList(values.subList(4, DATA_COLUMN_COUNT)));
 
         return Optional.of(speciality);
     }

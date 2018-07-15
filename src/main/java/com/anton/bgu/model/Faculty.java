@@ -1,12 +1,13 @@
 package com.anton.bgu.model;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Assert;
+import org.srplib.validation.DefaultValidationError;
+import org.srplib.validation.ValidationErrors;
 
 /**
  * Факультет.
@@ -56,12 +57,16 @@ public class Faculty {
             .sum();
     }
 
-    public Map<Range, Integer> getFreeRequests() {
-//        specialities.forEach(speciality -> {
-//            speciality
-//        });
-//        return freeRequests;
-        return null;
+    public RequestsDistribution getFreeRequests() {
+        RequestsDistribution distribution = new RequestsDistribution();
+        specialities.forEach(speciality -> distribution.add(speciality.getFreeRequests()));
+        return distribution;
+    }
+
+    public RequestsDistribution getPayRequests() {
+        RequestsDistribution distribution = new RequestsDistribution();
+        specialities.forEach(speciality -> distribution.add(speciality.getPayRequests()));
+        return distribution;
     }
 
     public Range getFreePass() {
@@ -73,7 +78,23 @@ public class Faculty {
     }
 
     public void validate() {
-        specialities.forEach(Speciality::validate);
+        ValidationErrors errors = new ValidationErrors();
+
+        specialities.forEach(speciality -> speciality.validate(errors));
+
+        if (getRequestTotal() != getFreeRequests().getRequestsCount()) {
+            errors.add(new DefaultValidationError(String.format(
+                "Бюджет. '%s'\n " +
+                    "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
+                    "количеством поданных заявок (%d).",
+                getName(), getRequestTotal(), getFreeRequests().getRequestsCount())));
+
+        }
+
+        if (errors.hasErrors()) {
+            System.out.println(errors.toString("\n"));
+//            throw new ValidationException(errors.toString("\n"), null, errors);
+        }
     }
 
     public Optional<Speciality> getSpeciality(String name) {

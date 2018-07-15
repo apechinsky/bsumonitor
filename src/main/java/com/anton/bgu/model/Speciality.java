@@ -1,7 +1,6 @@
 package com.anton.bgu.model;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.jsoup.nodes.Element;
 import org.srplib.validation.DefaultValidationError;
@@ -45,9 +44,9 @@ public class Speciality {
 
     private int requestNoConcurs;
 
-    private Map<Range, Integer> freeRequests = new TreeMap<>();
+    private RequestsDistribution freeRequests = new RequestsDistribution();
 
-    private Map<Range, Integer> payRequests = new TreeMap<>();
+    private RequestsDistribution payRequests = new RequestsDistribution();
 
     public String getName() {
         return name;
@@ -146,20 +145,20 @@ public class Speciality {
         return this;
     }
 
-    public Map<Range, Integer> getFreeRequests() {
+    public RequestsDistribution getFreeRequests() {
         return freeRequests;
     }
 
-    public Speciality setFreeRequests(Map<Range, Integer> freeRequests) {
+    public Speciality setFreeRequests(RequestsDistribution freeRequests) {
         this.freeRequests = freeRequests;
         return this;
     }
 
-    public Map<Range, Integer> getPayRequests() {
+    public RequestsDistribution getPayRequests() {
         return payRequests;
     }
 
-    public void setPayRequests(Map<Range, Integer> payRequests) {
+    public void setPayRequests(RequestsDistribution payRequests) {
         this.payRequests = payRequests;
     }
 
@@ -188,19 +187,18 @@ public class Speciality {
     }
 
     private int getRangedFreeRequests() {
-        return freeRequests.values().stream().mapToInt(i -> i).sum();
+        return freeRequests.getRequestsCount();
     }
 
     private int getRangedPayRequests() {
-        return payRequests.values().stream().mapToInt(i -> i).sum();
+        return payRequests.getRequestsCount();
     }
 
     private int getPrivilegedRequests() {
         return requestContract + requestNoExam + requestNoConcurs;
     }
 
-    public void validate() {
-        ValidationErrors errors = new ValidationErrors();
+    public void validate(ValidationErrors errors) {
 
         if (getRequestFreeTotal() != getPrivilegedRequests() + getRangedFreeRequests()) {
             errors.add(new DefaultValidationError(String.format(
@@ -215,10 +213,7 @@ public class Speciality {
                 "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
                 "количеством поданных заявок (%d).", getName(), getRequestPayTotal(), getPrivilegedRequests() + getRangedPayRequests())));
         }
-        if (errors.hasErrors()) {
-            System.out.println(errors.toString("\n"));
-//            throw new ValidationException(errors.toString("\n"), null, errors);
-        }
+
     }
 
     @Override

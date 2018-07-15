@@ -1,17 +1,17 @@
 package com.anton.bgu.parser;
 
-import java.util.Comparator;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.TreeMap;
 
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Argument;
 
-import com.anton.bgu.model.Range;
+import com.anton.bgu.model.RequestsDistribution;
 import com.anton.bgu.model.Speciality;
 import static com.anton.bgu.parser.ParserUtils.RANGES;
 import static com.anton.bgu.parser.ParserUtils.asInt;
+import static com.anton.bgu.parser.ParserUtils.getIntList;
+import static com.anton.bgu.parser.ParserUtils.skipElements;
 
 /**
  * @author Q-APE
@@ -47,11 +47,11 @@ public class FreeSpecialityParser implements SpecialityParser {
         speciality.setRequestNoExam(asInt(specialityElement.getRequestNoExam()));
         speciality.setRequestNoConcurs(asInt(specialityElement.getRequestNoConcurs()));
 
-        Map<Range, Integer> requests = new TreeMap<>(Comparator.reverseOrder());
-        for (int i = 0; i < RANGES.size(); i++) {
-            requests.put(RANGES.get(i), asInt(specialityElement.getRanged(i)));
-        }
-        speciality.setFreeRequests(requests);
+        // элемент соответствует диапазону баллов [400, 391]
+        Element firstRangedValueElement = skipElements(specialityElement.getRequestNoConcurs(), 1);
+        List<Integer> rangedRequests = getIntList(firstRangedValueElement, RANGES.size());
+
+        speciality.setFreeRequests(RequestsDistribution.fromRequestList(rangedRequests));
 
         return Optional.of(speciality);
     }
