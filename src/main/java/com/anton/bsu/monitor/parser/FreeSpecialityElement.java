@@ -1,8 +1,8 @@
-package com.anton.bgu.monitor.parser;
+package com.anton.bsu.monitor.parser;
 
 import org.jsoup.nodes.Element;
 
-import static com.anton.bgu.monitor.parser.ParserUtils.skipElements;
+import static com.anton.bsu.monitor.parser.ParserUtils.skipElements;
 
 /**
  * @author Q-APE

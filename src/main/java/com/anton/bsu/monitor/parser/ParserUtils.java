@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor.parser;
+package com.anton.bsu.monitor.parser;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +8,8 @@ import java.util.stream.Stream;
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Argument;
 
-import com.anton.bgu.monitor.model.Faculty;
-import com.anton.bgu.monitor.model.Range;
-import com.anton.bgu.monitor.model.RequestsDistribution;
+import com.anton.bsu.monitor.model.Faculty;
+import com.anton.bsu.monitor.model.Range;
 
 /**
  * @author Q-APE

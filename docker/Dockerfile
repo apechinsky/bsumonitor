@@ -4,6 +4,6 @@ RUN mkdir /opt/bsumonitor
 
 COPY bsumonitor-0.1.0.jar /opt/bsumonitor
 
-WORKDIR /opt/bgumonitor
+WORKDIR /opt/bsumonitor
 
 CMD ["java", "-jar", "bsumonitor-0.1.0.jar"]

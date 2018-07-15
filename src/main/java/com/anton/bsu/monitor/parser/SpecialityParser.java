@@ -1,10 +1,10 @@
-package com.anton.bgu.monitor.parser;
+package com.anton.bsu.monitor.parser;
 
 import java.util.Optional;
 
 import org.jsoup.nodes.Element;
 
-import com.anton.bgu.monitor.model.Speciality;
+import com.anton.bsu.monitor.model.Speciality;
 
 /**
  * Парсер специальности

@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor.parser;
+package com.anton.bsu.monitor.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.anton.bgu.monitor.model.Faculty;
-import com.anton.bgu.monitor.model.RequestsModel;
-import com.anton.bgu.monitor.model.Speciality;
-import static com.anton.bgu.monitor.parser.ParserUtils.skipElements;
+import com.anton.bsu.monitor.model.Faculty;
+import com.anton.bsu.monitor.model.RequestsModel;
+import com.anton.bsu.monitor.model.Speciality;
+import static com.anton.bsu.monitor.parser.ParserUtils.skipElements;
 
 /**
  * @author Q-APE

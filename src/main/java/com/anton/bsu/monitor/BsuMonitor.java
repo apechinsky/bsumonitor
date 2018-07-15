@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor;
+package com.anton.bsu.monitor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,19 +8,20 @@ import java.nio.charset.StandardCharsets;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.anton.bgu.monitor.model.RequestsModel;
-import com.anton.bgu.monitor.parser.RequestListPageParser;
+import com.anton.bsu.monitor.model.RequestsModel;
+import com.anton.bsu.monitor.parser.RequestListPageParser;
 
 /**
  * @author Q-APE
  */
-public class BguMonitor {
+public class BsuMonitor {
 
-    private static final String FREE_URL = "https://abit.bsu.by/formk1?id=1";
+    private static final String BASE_URL = "https://abit.bsu.by/formk1";
+
+    public static final String FREE_URL = "https://abit.bsu.by/formk1?id=1";
 
     public static final String PAY_URL = "https://abit.bsu.by/formk1?id=7";
 
-    public static final String BASE_URL = "https://abit.bsu.by/formk1";
 
     public RequestsModel loadModelFromSite() {
         Document free = loadDocumentFromUrl(FREE_URL);
@@ -44,7 +45,7 @@ public class BguMonitor {
 
     public static Document loadDocumentFromResource(String resource) {
         try {
-            try (InputStream inputStream = BguMonitor.class.getResourceAsStream(resource)) {
+            try (InputStream inputStream = BsuMonitor.class.getResourceAsStream(resource)) {
                 return Jsoup.parse(inputStream, StandardCharsets.UTF_8.name(), BASE_URL);
             }
         }

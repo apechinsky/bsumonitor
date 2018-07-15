@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor.parser;
+package com.anton.bsu.monitor.parser;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Argument;
 
-import com.anton.bgu.monitor.model.RequestsDistribution;
-import com.anton.bgu.monitor.model.Speciality;
-import static com.anton.bgu.monitor.parser.ParserUtils.RANGES;
-import static com.anton.bgu.monitor.parser.ParserUtils.asInt;
-import static com.anton.bgu.monitor.parser.ParserUtils.getIntList;
-import static com.anton.bgu.monitor.parser.ParserUtils.skipElements;
+import com.anton.bsu.monitor.model.RequestsDistribution;
+import com.anton.bsu.monitor.model.Speciality;
+import static com.anton.bsu.monitor.parser.ParserUtils.RANGES;
+import static com.anton.bsu.monitor.parser.ParserUtils.asInt;
+import static com.anton.bsu.monitor.parser.ParserUtils.getIntList;
+import static com.anton.bsu.monitor.parser.ParserUtils.skipElements;
 
 /**
  * @author Q-APE

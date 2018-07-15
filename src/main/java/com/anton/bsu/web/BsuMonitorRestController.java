@@ -1,14 +1,14 @@
-package com.anton.bgu.web;
+package com.anton.bsu.web;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-public class BguMonitorRestController {
+public class BsuMonitorRestController {
 
     @RequestMapping("/rest")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return "not implemented";
     }
 
 }

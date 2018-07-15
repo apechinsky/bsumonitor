@@ -1,4 +1,4 @@
-package com.anton.bgu.web;
+package com.anton.bsu.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

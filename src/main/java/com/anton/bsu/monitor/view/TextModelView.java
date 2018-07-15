@@ -1,9 +1,9 @@
-package com.anton.bgu.monitor.view;
+package com.anton.bsu.monitor.view;
 
 import java.util.List;
 
-import com.anton.bgu.monitor.model.Faculty;
-import com.anton.bgu.monitor.model.RequestsModel;
+import com.anton.bsu.monitor.model.Faculty;
+import com.anton.bsu.monitor.model.RequestsModel;
 
 /**
  * @author Q-APE

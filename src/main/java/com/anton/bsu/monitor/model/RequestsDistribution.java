@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor.model;
+package com.anton.bsu.monitor.model;
 
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import org.srplib.contract.Argument;
 import org.srplib.contract.Assert;
 
-import static com.anton.bgu.monitor.parser.ParserUtils.RANGES;
+import static com.anton.bsu.monitor.parser.ParserUtils.RANGES;
 
 
 /**

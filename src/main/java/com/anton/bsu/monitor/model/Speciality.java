@@ -1,4 +1,4 @@
-package com.anton.bgu.monitor.model;
+package com.anton.bsu.monitor.model;
 
 import java.util.Map;
 

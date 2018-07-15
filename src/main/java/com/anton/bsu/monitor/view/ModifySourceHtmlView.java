@@ -1,15 +1,15 @@
-package com.anton.bgu.monitor.view;
+package com.anton.bsu.monitor.view;
 
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.anton.bgu.monitor.model.Faculty;
-import com.anton.bgu.monitor.model.Range;
-import com.anton.bgu.monitor.model.RequestsModel;
-import com.anton.bgu.monitor.model.Speciality;
-import com.anton.bgu.monitor.parser.FreeSpecialityElement;
+import com.anton.bsu.monitor.model.Faculty;
+import com.anton.bsu.monitor.model.Range;
+import com.anton.bsu.monitor.model.RequestsModel;
+import com.anton.bsu.monitor.model.Speciality;
+import com.anton.bsu.monitor.parser.FreeSpecialityElement;
 
 /**
  * @author Q-APE
