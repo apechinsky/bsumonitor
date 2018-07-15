@@ -1,9 +1,9 @@
-package com.anton.bgu.view;
+package com.anton.bgu.monitor.view;
 
 import java.util.List;
 
-import com.anton.bgu.model.Faculty;
-import com.anton.bgu.model.RequestsModel;
+import com.anton.bgu.monitor.model.Faculty;
+import com.anton.bgu.monitor.model.RequestsModel;
 
 /**
  * @author Q-APE
@@ -35,8 +35,8 @@ public class TextModelView implements ModelView {
         render("Платное (план/заявок/проходной): %3d / %3d / %s",
             faculty.getPlanPay(), faculty.getRequestPay(), faculty.getPayPass());
 
-        render("Free Total: " + faculty.getFreeRequestDistribution());
-        render("Pay  Total: " + faculty.getPayRequestDistribution());
+//        render("Free Total: " + faculty.getFreeRequestDistribution());
+//        render("Pay  Total: " + faculty.getPayRequestDistribution());
 
         faculty.getSpecialities().forEach(speciality -> {
             render("    План (бюджет/платное) [%3d/%3d], Заявок (бюджет/платное) [%3d/%3d], Баллы (бюджет/платное) %s / %s - %s",

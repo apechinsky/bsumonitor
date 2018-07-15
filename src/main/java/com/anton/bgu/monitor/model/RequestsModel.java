@@ -1,4 +1,4 @@
-package com.anton.bgu.model;
+package com.anton.bgu.monitor.model;
 
 import java.util.List;
 import java.util.Optional;
