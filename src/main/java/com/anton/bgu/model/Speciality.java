@@ -33,10 +33,10 @@ public class Speciality {
     private int planPay;
 
 
-    private int requestPayTotal;
+    private int requestPay;
 
 
-    private int requestFreeTotal;
+    private int requestFree;
 
     private int requestContract;
 
@@ -44,9 +44,9 @@ public class Speciality {
 
     private int requestNoConcurs;
 
-    private RequestsDistribution freeRequests = new RequestsDistribution();
+    private RequestsDistribution freeRequestDistribution = new RequestsDistribution();
 
-    private RequestsDistribution payRequests = new RequestsDistribution();
+    private RequestsDistribution payRequestDistribution = new RequestsDistribution();
 
     public String getName() {
         return name;
@@ -97,25 +97,25 @@ public class Speciality {
         return getPlanFree() + getPlanPay();
     }
 
-    public int getRequestFreeTotal() {
-        return requestFreeTotal;
+    public int getRequestFree() {
+        return requestFree;
     }
 
-    public Speciality setRequestFreeTotal(int requestFreeTotal) {
-        this.requestFreeTotal = requestFreeTotal;
+    public Speciality setRequestFree(int requestFree) {
+        this.requestFree = requestFree;
         return this;
     }
 
-    public int getRequestPayTotal() {
-        return requestPayTotal;
+    public int getRequestPay() {
+        return requestPay;
     }
 
-    public void setRequestPayTotal(int requestPayTotal) {
-        this.requestPayTotal = requestPayTotal;
+    public void setRequestPay(int requestPay) {
+        this.requestPay = requestPay;
     }
 
     public int getRequestsTotal() {
-        return getRequestFreeTotal() + getRequestPayTotal();
+        return getRequestFree() + getRequestPay();
     }
 
     public int getRequestContract() {
@@ -145,27 +145,27 @@ public class Speciality {
         return this;
     }
 
-    public RequestsDistribution getFreeRequests() {
-        return freeRequests;
+    public RequestsDistribution getFreeRequestDistribution() {
+        return freeRequestDistribution;
     }
 
-    public Speciality setFreeRequests(RequestsDistribution freeRequests) {
-        this.freeRequests = freeRequests;
+    public Speciality setFreeRequestDistribution(RequestsDistribution distribution) {
+        this.freeRequestDistribution = distribution;
         return this;
     }
 
-    public RequestsDistribution getPayRequests() {
-        return payRequests;
+    public RequestsDistribution getPayRequestDistribution() {
+        return payRequestDistribution;
     }
 
-    public void setPayRequests(RequestsDistribution payRequests) {
-        this.payRequests = payRequests;
+    public void setPayRequestDistribution(RequestsDistribution distribution) {
+        this.payRequestDistribution = distribution;
     }
 
     public Range getFreePass() {
         Integer sum = getPrivilegedRequests();
 
-        for (Map.Entry<Range, Integer> entry : freeRequests.entrySet()) {
+        for (Map.Entry<Range, Integer> entry : freeRequestDistribution.entrySet()) {
             sum += entry.getValue();
             if (sum >= planFree) {
                 return entry.getKey();
@@ -177,7 +177,7 @@ public class Speciality {
     public Range getPayPass() {
         Integer sum = 0;
 
-        for (Map.Entry<Range, Integer> entry : payRequests.entrySet()) {
+        for (Map.Entry<Range, Integer> entry : payRequestDistribution.entrySet()) {
             sum += entry.getValue();
             if (sum >= planPay) {
                 return entry.getKey();
@@ -187,11 +187,11 @@ public class Speciality {
     }
 
     private int getRangedFreeRequests() {
-        return freeRequests.getRequestsCount();
+        return freeRequestDistribution.getRequestsCount();
     }
 
     private int getRangedPayRequests() {
-        return payRequests.getRequestsCount();
+        return payRequestDistribution.getRequestsCount();
     }
 
     public int getPrivilegedRequests() {
@@ -200,18 +200,18 @@ public class Speciality {
 
     public void validate(ValidationErrors errors) {
 
-        if (getRequestFreeTotal() != getPrivilegedRequests() + getRangedFreeRequests()) {
+        if (getRequestFree() != getPrivilegedRequests() + getRangedFreeRequests()) {
             errors.add(new DefaultValidationError(String.format(
                 "Бюджет. '%s'\n " +
                 "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
-                "количеством поданных заявок (%d).", getName(), getRequestFreeTotal(), getPrivilegedRequests() + getRangedFreeRequests())));
+                "количеством поданных заявок (%d).", getName(), getRequestFree(), getPrivilegedRequests() + getRangedFreeRequests())));
         }
 
-        if (getRequestPayTotal() != getRangedPayRequests()) {
+        if (getRequestPay() != getRangedPayRequests()) {
             errors.add(new DefaultValidationError(String.format(
                 "Платное. '%s'\n " +
                 "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
-                "количеством поданных заявок (%d).", getName(), getRequestPayTotal(), getPrivilegedRequests() + getRangedPayRequests())));
+                "количеством поданных заявок (%d).", getName(), getRequestPay(), getPrivilegedRequests() + getRangedPayRequests())));
         }
 
     }
@@ -223,12 +223,12 @@ public class Speciality {
         sb.append(", planFree=").append(planFree);
         sb.append(", planContract=").append(planContract);
         sb.append(", planPayee=").append(planPay);
-        sb.append(", requestFreeTotal=").append(requestFreeTotal);
-        sb.append(", requestPayTotal=").append(requestPayTotal);
+        sb.append(", requestFree=").append(requestFree);
+        sb.append(", requestPay=").append(requestPay);
         sb.append(", requestContract=").append(requestContract);
         sb.append(", requestNoExam=").append(requestNoExam);
         sb.append(", requestNoConcurs=").append(requestNoConcurs);
-        sb.append(", requests=").append(freeRequests);
+        sb.append(", requests=").append(freeRequestDistribution);
         sb.append('}');
         return sb.toString();
     }

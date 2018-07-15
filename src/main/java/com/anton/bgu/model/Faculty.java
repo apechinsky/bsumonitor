@@ -59,25 +59,25 @@ public class Faculty {
 
     public int getRequestFree() {
         return specialities.stream()
-            .mapToInt(Speciality::getRequestFreeTotal)
+            .mapToInt(Speciality::getRequestFree)
             .sum();
     }
 
     public int getRequestPay() {
         return specialities.stream()
-            .mapToInt(Speciality::getRequestPayTotal)
+            .mapToInt(Speciality::getRequestPay)
             .sum();
     }
 
-    public RequestsDistribution getFreeRequests() {
+    public RequestsDistribution getFreeRequestDistribution() {
         RequestsDistribution distribution = new RequestsDistribution();
-        specialities.forEach(speciality -> distribution.add(speciality.getFreeRequests()));
+        specialities.forEach(speciality -> distribution.add(speciality.getFreeRequestDistribution()));
         return distribution;
     }
 
-    public RequestsDistribution getPayRequests() {
+    public RequestsDistribution getPayRequestDistribution() {
         RequestsDistribution distribution = new RequestsDistribution();
-        specialities.forEach(speciality -> distribution.add(speciality.getPayRequests()));
+        specialities.forEach(speciality -> distribution.add(speciality.getPayRequestDistribution()));
         return distribution;
     }
 
@@ -86,11 +86,11 @@ public class Faculty {
     }
 
     public Range getFreePass() {
-        return getFreeRequests().getPassRange(getPlanFree(), getPrivilegedRequests());
+        return getFreeRequestDistribution().getPassRange(getPlanFree(), getPrivilegedRequests());
     }
 
     public Range getPayPass() {
-        return getFreeRequests().getPassRange(getPlanPay(), 0);
+        return getPayRequestDistribution().getPassRange(getPlanPay(), 0);
     }
 
     public void validate() {
@@ -98,12 +98,12 @@ public class Faculty {
 
         specialities.forEach(speciality -> speciality.validate(errors));
 
-        if (getRequestFree() != getFreeRequests().getRequestsCount() + getPrivilegedRequests()) {
+        if (getRequestFree() != getFreeRequestDistribution().getRequestsCount() + getPrivilegedRequests()) {
             errors.add(new DefaultValidationError(String.format(
                 "Бюджет. '%s'\n " +
                     "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
                     "количеством поданных заявок (%d).",
-                getName(), getRequestFree(), getFreeRequests().getRequestsCount() + getPrivilegedRequests())));
+                getName(), getRequestFree(), getFreeRequestDistribution().getRequestsCount() + getPrivilegedRequests())));
 
         }
 

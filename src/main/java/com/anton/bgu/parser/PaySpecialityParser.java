@@ -39,12 +39,12 @@ public class PaySpecialityParser implements SpecialityParser {
         speciality.setPlanContract(0);
         speciality.setPlanPay(values.get(0));
 
-        speciality.setRequestPayTotal(values.get(1));
+        speciality.setRequestPay(values.get(1));
         speciality.setRequestContract(0);
         speciality.setRequestNoExam(values.get(2));
         speciality.setRequestNoConcurs(values.get(3));
 
-        speciality.setPayRequests(fromRequestList(values.subList(4, DATA_COLUMN_COUNT)));
+        speciality.setPayRequestDistribution(fromRequestList(values.subList(4, DATA_COLUMN_COUNT)));
 
         return Optional.of(speciality);
     }

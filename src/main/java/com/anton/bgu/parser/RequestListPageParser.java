@@ -97,8 +97,8 @@ public class RequestListPageParser {
             Optional<Speciality> paySpeciality = payFaculty.getSpeciality(freeSpeciality.getName());
 
             if (paySpeciality.isPresent()) {
-                freeSpeciality.setPayRequests(paySpeciality.get().getPayRequests());
-                freeSpeciality.setRequestPayTotal(paySpeciality.get().getRequestPayTotal());
+                freeSpeciality.setPayRequestDistribution(paySpeciality.get().getPayRequestDistribution());
+                freeSpeciality.setRequestPay(paySpeciality.get().getRequestPay());
             }
             else {
                 ParserUtils.log("%s. Не найдена специальность '%s' в платном плане.", freeFaculty.getName(), freeSpeciality.getName());

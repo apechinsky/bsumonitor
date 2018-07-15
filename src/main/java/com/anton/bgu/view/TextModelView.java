@@ -28,19 +28,20 @@ public class TextModelView implements ModelView {
     }
 
     private void printFaculty(Faculty faculty) {
-        render("%s - Бюджет (план/заявок): %d / %d, Платное (план/заявок): %d / %d", faculty.getName(),
-            faculty.getPlanFree(), faculty.getRequestFree(),
-            faculty.getPlanPay(), faculty.getRequestPay()
-        );
-
-        render("Free Total: " + faculty.getFreeRequests());
-        render("Pay  Total: " + faculty.getPayRequests());
+        render("# %s", faculty.getName());
         render("Вне конкурса: " + faculty.getPrivilegedRequests());
+        render("Бюджет (план/заявок/проходной) : %3d / %3d / %s",
+            faculty.getPlanFree(), faculty.getRequestFree(), faculty.getFreePass());
+        render("Платное (план/заявок/проходной): %3d / %3d / %s",
+            faculty.getPlanPay(), faculty.getRequestPay(), faculty.getPayPass());
+
+        render("Free Total: " + faculty.getFreeRequestDistribution());
+        render("Pay  Total: " + faculty.getPayRequestDistribution());
 
         faculty.getSpecialities().forEach(speciality -> {
             render("    План (бюджет/платное) [%3d/%3d], Заявок (бюджет/платное) [%3d/%3d], Баллы (бюджет/платное) %s / %s - %s",
                 speciality.getPlanFree(), speciality.getPlanPay(),
-                speciality.getRequestFreeTotal(), speciality.getRequestPayTotal(),
+                speciality.getRequestFree(), speciality.getRequestPay(),
                 speciality.getFreePass(), speciality.getPayPass(),
                 speciality.getName()
             );

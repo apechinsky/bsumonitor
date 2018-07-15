@@ -42,7 +42,7 @@ public class FreeSpecialityParser implements SpecialityParser {
         speciality.setPlanContract(asInt(specialityElement.getPlanContract()));
         speciality.setPlanPay(asInt(specialityElement.getPlanPay()));
 
-        speciality.setRequestFreeTotal(asInt(specialityElement.getRequestFreeTotal()));
+        speciality.setRequestFree(asInt(specialityElement.getRequestFreeTotal()));
         speciality.setRequestContract(asInt(specialityElement.getRequestContract()));
         speciality.setRequestNoExam(asInt(specialityElement.getRequestNoExam()));
         speciality.setRequestNoConcurs(asInt(specialityElement.getRequestNoConcurs()));
@@ -51,7 +51,7 @@ public class FreeSpecialityParser implements SpecialityParser {
         Element firstRangedValueElement = skipElements(specialityElement.getRequestNoConcurs(), 1);
         List<Integer> rangedRequests = getIntList(firstRangedValueElement, RANGES.size());
 
-        speciality.setFreeRequests(RequestsDistribution.fromRequestList(rangedRequests));
+        speciality.setFreeRequestDistribution(RequestsDistribution.fromRequestList(rangedRequests));
 
         return Optional.of(speciality);
     }
