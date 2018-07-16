@@ -17,18 +17,23 @@
         <th>План</th>
         <th>Заявок</th>
         <th>Проходной</th>
+        <th>Не проходят</th>
+        <th>< 311</th>
     </tr>
     <tr>
         <td>Бюджет</td>
         <td th:text="${fpmi.getPlanFree()}">0</td>
         <td th:text="${fpmi.getRequestFree()}">0</td>
         <td th:text="${fpmi.getFreePass()}">0</td>
+        <td th:text="${fpmi.getRequestsBeyondPassFree()}">0</td>
+        <td th:text="${fpmi.getRequestCountBelow311()}">0</td>
     </tr>
     <tr>
         <td>Платное</td>
         <td th:text="${fpmi.getPlanPay()}">0</td>
         <td th:text="${fpmi.getRequestPay()}">0</td>
         <td th:text="${fpmi.getPayPass()}">0</td>
+        <td th:text="${fpmi.getRequestsBeyondPassPay()}">0</td>
     </tr>
 </table>
 
@@ -37,6 +42,8 @@
         <th>План (б/п)</th>
         <th>Заявок (б/п)</th>
         <th>Проходной (б/п)</th>
+        <th>Не проходят (б/п)</th>
+        <th>< 311</th>
         <th>Специальность</th>
     </tr>
     <tr th:each="speciality : ${fpmi.getSpecialitiesByPopularity()}">
@@ -55,6 +62,13 @@
             <span>/</span>
             <span th:text="${speciality.getPayPass()}"></span>
         </td>
+        <td>
+            <span th:text="${speciality.getRequestsBeyondPassFree()}"></span>
+            <span>/</span>
+            <span th:text="${speciality.getRequestsBeyondPassPay()}"></span>
+        </td>
+        <td th:text="${speciality.getRequestCountBelow311()}">0</td>
+        
         <td th:text="${speciality.getName()}">0</td>
     </tr>
 </table>

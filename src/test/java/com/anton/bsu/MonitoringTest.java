@@ -35,7 +35,7 @@ public class MonitoringTest {
         RequestsModel requestsModel = new BsuMonitor().loadModelFromSite();
 
         String render = new TextModelView().render(requestsModel);
-        System.out.println(render);
+//        System.out.println(render);
 
         String render2 = new ModifySourceHtmlView().render(requestsModel);
     }

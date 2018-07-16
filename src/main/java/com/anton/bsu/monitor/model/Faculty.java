@@ -74,10 +74,18 @@ public class Faculty {
             .sum();
     }
 
+    public int getRequestsBeyondPassFree() {
+        return Math.max(0, getRequestFree() - getPlanFree());
+    }
+
     public int getRequestPay() {
         return specialities.stream()
             .mapToInt(Speciality::getRequestPay)
             .sum();
+    }
+
+    public int getRequestsBeyondPassPay() {
+        return Math.max(0, getRequestPay() - getPlanPay());
     }
 
     public RequestsDistribution getFreeRequestDistribution() {
@@ -102,6 +110,23 @@ public class Faculty {
 
     public Range getPayPass() {
         return getPayRequestDistribution().getPassRange(getPlanPay(), 0);
+    }
+
+    /**
+     * Возвращает количество заявок ниже указанного диапазона.
+     *
+     * <p>Расчет ведется по бюджетным и платным заявкам.</p>
+     *
+     * @param range диапазон
+     */
+    public int getRequestCountBelow(Range range) {
+        return specialities.stream()
+            .mapToInt(speciality -> speciality.getRequestCountBelow(range))
+            .sum();
+    }
+
+    public int getRequestCountBelow311() {
+        return getRequestCountBelow(new Range(320, 311));
     }
 
     public void validate() {

@@ -1,7 +1,5 @@
 package com.anton.bsu.monitor.model;
 
-import java.util.Map;
-
 import org.jsoup.nodes.Element;
 import org.srplib.validation.DefaultValidationError;
 import org.srplib.validation.ValidationErrors;
@@ -114,6 +112,14 @@ public class Speciality {
         this.requestPay = requestPay;
     }
 
+    public int getRequestsBeyondPassFree() {
+        return Math.max(0, getRequestFree() - getPlanFree());
+    }
+
+    public int getRequestsBeyondPassPay() {
+        return Math.max(0, getRequestPay() - getPlanPay());
+    }
+
     public int getRequestsTotal() {
         return getRequestFree() + getRequestPay();
     }
@@ -163,27 +169,11 @@ public class Speciality {
     }
 
     public Range getFreePass() {
-        Integer sum = getPrivilegedRequests();
-
-        for (Map.Entry<Range, Integer> entry : freeRequestDistribution.entrySet()) {
-            sum += entry.getValue();
-            if (sum >= planFree) {
-                return entry.getKey();
-            }
-        }
-        return Range.zero();
+        return getFreeRequestDistribution().getPassRange(getPlanFree(), getPrivilegedRequests());
     }
 
     public Range getPayPass() {
-        Integer sum = 0;
-
-        for (Map.Entry<Range, Integer> entry : payRequestDistribution.entrySet()) {
-            sum += entry.getValue();
-            if (sum >= planPay) {
-                return entry.getKey();
-            }
-        }
-        return Range.zero();
+        return getPayRequestDistribution().getPassRange(getPlanPay(), 0);
     }
 
     private int getRangedFreeRequests() {
@@ -214,6 +204,22 @@ public class Speciality {
                 "количеством поданных заявок (%d).", getName(), getRequestPay(), getPrivilegedRequests() + getRangedPayRequests())));
         }
 
+    }
+
+    /**
+     * Возвращает количество заявок ниже указанного диапазона.
+     *
+     * <p>Расчет ведется по бюджетным и платным заявкам.</p>
+     *
+     * @param range диапазон
+     */
+    public int getRequestCountBelow(Range range) {
+        return freeRequestDistribution.getRequestCountBelow(range) +
+            payRequestDistribution.getRequestCountBelow(range);
+    }
+
+    public int getRequestCountBelow311() {
+        return getRequestCountBelow(new Range(320, 311));
     }
 
     @Override

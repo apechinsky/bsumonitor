@@ -12,6 +12,12 @@ import static com.anton.bsu.monitor.parser.ParserUtils.RANGES;
 
 
 /**
+ * Инкапсулирует распределение заявлений по диапазонам баллов.
+ *
+ * <p>
+ *     Поддерживает соответствие [диапазон: количество заявлений]
+ * </p>
+ *
  * @author Q-APE
  */
 public class RequestsDistribution {
@@ -75,18 +81,42 @@ public class RequestsDistribution {
         return requests.toString();
     }
 
+    /**
+     * Предполагаемый проходной диапазон баллов.
+     *
+     * @param planCount плановое количество человек
+     * @param privilegedCount количество челоевек вне конкурса
+     */
     public Range getPassRange(int planCount, int privilegedCount) {
 
         int sum = privilegedCount;
 
         for (Map.Entry<Range, Integer> entry : requests.entrySet()) {
-            sum += entry.getValue();
-            if (sum >= planCount) {
-                return entry.getKey();
+
+            if (entry.getValue() > 0) {
+
+                sum += entry.getValue();
+                if (sum >= planCount) {
+                    return entry.getKey();
+                }
+
             }
+
         }
 
         return Range.zero();
-
     }
+
+    /**
+     * Возвращает количество заявок ниже указанного диапазона.
+     *
+     * @param range диапазон
+     */
+    public int getRequestCountBelow(Range range) {
+        return requests.entrySet().stream()
+            .filter(entry -> range.compareTo(entry.getKey()) > 0)
+            .mapToInt(Map.Entry::getValue)
+            .sum();
+    }
+
 }

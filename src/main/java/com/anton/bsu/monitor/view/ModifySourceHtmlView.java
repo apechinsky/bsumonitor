@@ -68,26 +68,44 @@ public class ModifySourceHtmlView implements ModelView {
             setColor(element.getPlanPay(), "red");
         }
 
-        Element payTotal = new Element("span")
-            .text(String.valueOf(speciality.getRequestPay()))
-            .attr("style", "color: gray; font-size: 0.8em");
-        element.getPlanPay().appendChild(payTotal);
+        addPayRequestsToPayPlan(speciality, element);
+
+        Range freePass = speciality.getFreePass();
+        Range payPass = speciality.getPayPass();
 
         int index = 0;
         for (Map.Entry<Range, Integer> entry : speciality.getPayRequestDistribution().entrySet()) {
-            if (entry.getValue() > 0) {
-                Element ranged = element.getRanged(index);
 
-                Element free = new Element("span")
+            Element ranged = element.getRanged(index);
+
+            if (freePass.compareTo(entry.getKey()) <= 0) {
+                ranged.attr("style", "background-color: #9eef86");
+            }
+//            else if (payPass.compareTo(entry.getKey()) <= 0) {
+//                ranged.attr("style", "background-color: #8697ef");
+//            }
+//            else {
+//                ranged.attr("style", "background-color: #ff765ef");
+//            }
+
+
+            if (entry.getValue() > 0) {
+                Element pay = new Element("span")
                     .text(entry.getValue().toString())
                     .attr("style", "color: gray; font-size: 0.8em");
 
-                ranged.appendChild(free);
+                ranged.appendChild(pay);
             }
             index++;
         }
 
+    }
 
+    private void addPayRequestsToPayPlan(Speciality speciality, FreeSpecialityElement element) {
+        Element payTotal = new Element("span")
+            .text(String.valueOf(speciality.getRequestPay()))
+            .attr("style", "color: gray; font-size: 0.8em");
+        element.getPlanPay().appendChild(payTotal);
     }
 
     private void setColor(Element element, String color) {
