@@ -30,6 +30,11 @@ public class RequestsModel {
             .findFirst();
     }
 
+    public Faculty getFaculty(FacultyName name) {
+        return getFacultyByName(name.getName())
+            .orElseThrow(() -> Assert.failure("Faculty '%s' not found", name));
+    }
+
     public Document getDocument() {
         Assert.checkNotNull(document, "Document was not provided!");
         return document;

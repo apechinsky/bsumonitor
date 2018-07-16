@@ -1,5 +1,7 @@
 package com.anton.bsu.web;
 
+import java.util.Optional;
+
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.anton.bsu.monitor.BsuMonitor;
+import com.anton.bsu.monitor.model.Faculty;
+import com.anton.bsu.monitor.model.FacultyName;
 import com.anton.bsu.monitor.model.RequestsModel;
 import com.anton.bsu.monitor.view.ModifySourceHtmlView;
 import com.anton.bsu.monitor.view.TextModelView;
@@ -46,6 +50,22 @@ public class BsuMonitorController {
         RequestsModel model = new BsuMonitor().loadModelFromSite();
 
         return new ModifySourceHtmlView().render(model);
+    }
+
+    /**
+     * Вывод данных по ФПМИ/Мехмат
+     */
+    @GetMapping(value = "/fpmi")
+    public String fpm(Model model) {
+        RequestsModel requestsModel = new BsuMonitor().loadModelFromSite();
+
+        model.addAttribute("model", requestsModel);
+
+        model.addAttribute("fpmi", requestsModel.getFaculty(FacultyName.FPMI));
+
+        model.addAttribute("mexmat", requestsModel.getFaculty(FacultyName.MEXMAT));
+
+        return "fpmi";
     }
 
     /**

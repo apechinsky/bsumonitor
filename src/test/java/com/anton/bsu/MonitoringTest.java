@@ -21,17 +21,6 @@ import com.anton.bsu.monitor.view.TextModelView;
  */
 public class MonitoringTest {
 
-
-    @Test
-    public void modify() throws Exception {
-        Document free = BsuMonitor.loadDocumentFromResource("/free.html");
-        Element fl = free.selectFirst("td.fl");
-        fl.attributes().put("class", "aaaa") ;
-        fl.attributes().put("class", "bbbb") ;
-
-        writeToFile(free, "modified.html");
-    }
-
     private Path writeToFile(Document free, String file) throws IOException {
         return writeToFile(free.outerHtml(), file);
     }
@@ -49,7 +38,6 @@ public class MonitoringTest {
         System.out.println(render);
 
         String render2 = new ModifySourceHtmlView().render(requestsModel);
-        writeToFile(render2, "modified.html");
     }
 
 }

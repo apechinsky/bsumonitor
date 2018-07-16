@@ -14,7 +14,8 @@ import com.anton.bsu.monitor.parser.RequestListPageParser;
 /**
  * @author Q-APE
  */
-public class BsuMonitor {
+public class
+BsuMonitor {
 
     private static final String BASE_URL = "https://abit.bsu.by/formk1";
 
