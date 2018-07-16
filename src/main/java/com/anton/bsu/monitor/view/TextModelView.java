@@ -37,7 +37,7 @@ public class TextModelView implements ModelView {
             faculty.getPlanPay(), faculty.getRequestPay(), faculty.getPayPass());
         render("Бюджет. Не проходящие : %d", faculty.getRequestsBeyondPassFree());
         render("Платное. Не проходящие : %d", faculty.getRequestsBeyondPassPay());
-        render("Заявок ниже %s : %d", faculty.getRequestCountBelow(new Range(320, 311)));
+        render("Заявок ниже : %d", faculty.getRequestCountBelow311());
 
 //        render("Free Total: " + faculty.getFreeRequestDistribution());
 //        render("Pay  Total: " + faculty.getPayRequestDistribution());
