@@ -4,6 +4,8 @@
     <title>Test</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.3.0.min.css"/>
+    <style>
+    </style>
 </head>
 <body>
 
@@ -37,22 +39,25 @@
         <th>Проходной (б/п)</th>
         <th>Специальность</th>
     </tr>
-    <tr th:each="speciality : ${fpmi.getSpecialities()}">
+    <tr th:each="speciality : ${fpmi.getSpecialitiesByPopularity()}">
         <td>
             <span th:text="${speciality.getPlanFree()}"></span>
+            <span>/</span>
             <span th:text="${speciality.getPlanPay()}"></span>
         </td>
         <td>
             <span th:text="${speciality.getRequestFree()}"></span>
+            <span>/</span>
             <span th:text="${speciality.getRequestPay()}"></span>
         </td>
         <td>
             <span th:text="${speciality.getFreePass()}"></span>
+            <span>/</span>
             <span th:text="${speciality.getPayPass()}"></span>
         </td>
         <td th:text="${speciality.getName()}">0</td>
     </tr>
-<table>
+</table>
 
 
 <h2 th:text="${mexmat.name}"></h2>
@@ -77,6 +82,34 @@
         <td th:text="${mexmat.getPayPass()}">0</td>
     </tr>
 </table>
+
+<table>
+    <tr>
+        <th>План (б/п)</th>
+        <th>Заявок (б/п)</th>
+        <th>Проходной (б/п)</th>
+        <th>Специальность</th>
+    </tr>
+    <tr th:each="speciality : ${mexmat.getSpecialitiesByPopularity()}">
+        <td>
+            <span th:text="${speciality.getPlanFree()}"></span>
+            <span>/</span>
+            <span th:text="${speciality.getPlanPay()}"></span>
+        </td>
+        <td>
+            <span th:text="${speciality.getRequestFree()}"></span>
+            <span>/</span>
+            <span th:text="${speciality.getRequestPay()}"></span>
+        </td>
+        <td>
+            <span th:text="${speciality.getFreePass()}"></span>
+            <span>/</span>
+            <span th:text="${speciality.getPayPass()}"></span>
+        </td>
+        <td th:text="${speciality.getName()}">0</td>
+    </tr>
+</table>
+
 
 </body>
 </html>

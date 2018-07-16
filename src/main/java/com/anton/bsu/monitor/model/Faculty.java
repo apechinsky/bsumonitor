@@ -1,8 +1,10 @@
 package com.anton.bsu.monitor.model;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jsoup.nodes.Element;
 import org.srplib.contract.Assert;
@@ -43,6 +45,15 @@ public class Faculty {
 
     public List<Speciality> getSpecialities() {
         return specialities;
+    }
+
+    public List<Speciality> getSpecialitiesByPopularity() {
+        Comparator<Speciality> comparing =
+            Comparator.comparing(speciality -> (double) speciality.getRequestFree() / speciality.getPlanFree());
+
+        return specialities.stream()
+            .sorted(comparing.reversed())
+            .collect(Collectors.toList());
     }
 
     public int getPlanFree() {
