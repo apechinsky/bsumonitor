@@ -1,5 +1,6 @@
 package com.anton.bsu.monitor.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,13 +16,25 @@ public class RequestsModel {
 
     private List<Faculty> faculties;
 
-    public RequestsModel(Document document, List<Faculty> faculties) {
+    private LocalDateTime updateFree;
+
+    private LocalDateTime updatePay;
+
+    public RequestsModel(LocalDateTime updateFree, LocalDateTime updatePay, Document document,
+        List<Faculty> faculties) {
+
+        this.updateFree = updateFree;
+        this.updatePay = updatePay;
         this.document = document;
         this.faculties = faculties;
     }
 
-    public RequestsModel(List<Faculty> faculties) {
-        this(null, faculties);
+    public LocalDateTime getUpdateFree() {
+        return updateFree;
+    }
+
+    public LocalDateTime getUpdatePay() {
+        return updatePay;
     }
 
     public Optional<Faculty> getFacultyByName(String name) {

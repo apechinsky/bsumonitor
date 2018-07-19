@@ -1,5 +1,7 @@
 package com.anton.bsu.monitor.parser;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +11,7 @@ import java.util.stream.StreamSupport;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.srplib.contract.Assert;
 
 import com.anton.bsu.monitor.model.Faculty;
 import com.anton.bsu.monitor.model.RequestsModel;
@@ -30,13 +33,28 @@ public class RequestListPageParser {
      */
     private static final int DATA_ROW_INDEX = 5;
 
+    /**
+     * Page update date/time format
+     */
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+        DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
     public RequestsModel parse(Document free, Document pay) {
         List<Faculty> freeFaculties = parseDocument(free, new FreeSpecialityParser());
         List<Faculty> payFaculties = parseDocument(pay, new PaySpecialityParser());
 
         List<Faculty> faculties = merge(freeFaculties, payFaculties);
 
-        return new RequestsModel(free, faculties);
+        LocalDateTime updateTimeFree = getUpdateTime(free);
+        LocalDateTime updateTimePay = getUpdateTime(pay);
+
+        return new RequestsModel(updateTimeFree, updateTimePay, free, faculties);
+    }
+
+    LocalDateTime getUpdateTime(Document document) {
+        Element element = document.selectFirst("#Abit_K11_lbCurrentDateTime");
+        Assert.checkNotNull(element, "Can't find update date. Element with id '%s'", "#Abit_K11_lbCurrentDateTime");
+        return LocalDateTime.parse(element.text(), DATE_TIME_FORMATTER);
     }
 
     public List<Faculty> parseDocument(Document document, SpecialityParser specialityParser) {

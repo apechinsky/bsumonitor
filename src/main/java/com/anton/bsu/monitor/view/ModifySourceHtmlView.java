@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.srplib.contract.Assert;
 
 import com.anton.bsu.monitor.model.Faculty;
 import com.anton.bsu.monitor.model.Range;
@@ -26,7 +27,17 @@ public class ModifySourceHtmlView implements ModelView {
         Document document = model.getDocument();
         setEncoding(document, "utf-8");
 
+        modifyUpdateTime(document, model);
+
         return model.getDocument().outerHtml();
+    }
+
+    private void modifyUpdateTime(Document document, RequestsModel model) {
+        Element element = document.selectFirst("#Abit_K11_lbCurrentDateTime");
+        Assert.checkNotNull(element, "Can't find update date. Element with id '%s'", "#Abit_K11_lbCurrentDateTime");
+
+        element.text(String.format("Бюджет:%s Платное: %s", model.getUpdateFree(), model.getUpdatePay()));
+
     }
 
     private void processFaculty(Faculty faculty) {
