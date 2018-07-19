@@ -15,6 +15,7 @@
     <tr>
         <th></th>
         <th>План</th>
+        <th>Вне конкурса</th>
         <th>Заявок</th>
         <th>Проходной</th>
         <th>Не проходят</th>
@@ -23,6 +24,7 @@
     <tr>
         <td>Бюджет</td>
         <td th:text="${fpmi.getPlanFree()}">0</td>
+        <td th:text="${fpmi.getPrivilegedRequests()}">0</td>
         <td th:text="${fpmi.getRequestFree()}">0</td>
         <td th:text="${fpmi.getFreePass()}">0</td>
         <td th:text="${fpmi.getRequestsBeyondPassFree()}">0</td>
@@ -31,6 +33,7 @@
     <tr>
         <td>Платное</td>
         <td th:text="${fpmi.getPlanPay()}">0</td>
+        <td>-</td>
         <td th:text="${fpmi.getRequestPay()}">0</td>
         <td th:text="${fpmi.getPayPass()}">0</td>
         <td th:text="${fpmi.getRequestsBeyondPassPay()}">0</td>
@@ -41,6 +44,7 @@
 <table>
     <tr>
         <th>План (б/п)</th>
+        <th>Вне конкурса</th>
         <th>Заявок (б/п)</th>
         <th>Проходной (б/п)</th>
         <th>Не проходят (б/п)</th>
@@ -53,6 +57,9 @@
             <span th:text="${speciality.getPlanFree()}"></span>
             <span>/</span>
             <span th:text="${speciality.getPlanPay()}"></span>
+        </td>
+        <td>
+            <span th:text="${speciality.getPrivilegedRequests()}"></span>
         </td>
         <td>
             <span th:text="${speciality.getRequestFree()}"></span>
@@ -83,6 +90,7 @@
     <tr>
         <th></th>
         <th>План</th>
+        <th>Вне конкурса</th>
         <th>Заявок</th>
         <th>Проходной</th>
         <th>Не проходят</th>
@@ -91,6 +99,7 @@
     <tr>
         <td>Бюджет</td>
         <td th:text="${mexmat.getPlanFree()}">0</td>
+        <td th:text="${mexmat.getPrivilegedRequests()}">0</td>
         <td th:text="${mexmat.getRequestFree()}">0</td>
         <td th:text="${mexmat.getFreePass()}">0</td>
         <td th:text="${mexmat.getRequestsBeyondPassFree()}">0</td>
@@ -99,6 +108,7 @@
     <tr>
         <td>Платное</td>
         <td th:text="${mexmat.getPlanPay()}">0</td>
+        <td>-</td>
         <td th:text="${mexmat.getRequestPay()}">0</td>
         <td th:text="${mexmat.getPayPass()}">0</td>
         <td th:text="${mexmat.getRequestsBeyondPassPay()}">0</td>
@@ -109,6 +119,7 @@
 <table>
     <tr>
         <th>План (б/п)</th>
+        <th>Вне конкурса</th>
         <th>Заявок (б/п)</th>
         <th>Проходной (б/п)</th>
         <th>Не проходят (б/п)</th>
@@ -121,6 +132,9 @@
             <span th:text="${speciality.getPlanFree()}"></span>
             <span>/</span>
             <span th:text="${speciality.getPlanPay()}"></span>
+        </td>
+        <td>
+            <span th:text="${speciality.getPrivilegedRequests()}"></span>
         </td>
         <td>
             <span th:text="${speciality.getRequestFree()}"></span>
