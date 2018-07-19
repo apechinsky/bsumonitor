@@ -40,8 +40,10 @@ public class ModifySourceHtmlView implements ModelView {
     }
 
     private void facultyAddPassPointsToTitle(Faculty faculty) {
-        faculty.getElement().text(String.format("%s, Проходный баллы: %s / %s",
-            faculty.getElement().text(), faculty.getFreePass(), faculty.getPayPass()));
+        faculty.getElement().text(String.format("%s, Проходный баллы: %s / %s, Не проходят (б/п): %d / %d, < 311 (б/п): %d / %d",
+            faculty.getElement().text(), faculty.getFreePass(), faculty.getPayPass(),
+            faculty.getRequestsBeyondPassFree(),faculty.getRequestsBeyondPassPay(),
+            faculty.getRequestCountBelow311Free(), faculty.getRequestCountBelow311Pay()));
     }
 
     private void facultyHighlightTitleIfRequestsExceedsPlan(Faculty faculty) {

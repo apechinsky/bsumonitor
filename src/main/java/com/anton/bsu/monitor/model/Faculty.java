@@ -119,14 +119,23 @@ public class Faculty {
      *
      * @param range диапазон
      */
-    public int getRequestCountBelow(Range range) {
+    public int getRequestCountBelowFree(Range range) {
         return specialities.stream()
-            .mapToInt(speciality -> speciality.getRequestCountBelow(range))
+            .mapToInt(speciality -> speciality.getRequestCountBelowFree(range))
+            .sum();
+    }
+    public int getRequestCountBelowPay(Range range) {
+        return specialities.stream()
+            .mapToInt(speciality -> speciality.getRequestCountBelowPay(range))
             .sum();
     }
 
-    public int getRequestCountBelow311() {
-        return getRequestCountBelow(new Range(320, 311));
+    public int getRequestCountBelow311Free() {
+        return getRequestCountBelowFree(new Range(320, 311));
+    }
+
+    public int getRequestCountBelow311Pay() {
+        return getRequestCountBelowPay(new Range(320, 311));
     }
 
     public void validate() {

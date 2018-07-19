@@ -201,9 +201,16 @@ public class Speciality {
             errors.add(new DefaultValidationError(String.format(
                 "Платное. '%s'\n " +
                 "Общее количество поданных заявок (Всего/requestsTotal: %d) не совпадает с расчетным " +
-                "количеством поданных заявок (%d).", getName(), getRequestPay(), getPrivilegedRequests() + getRangedPayRequests())));
+                "количеством поданных заявок (%d).", getName(), getRequestPay(), getRangedPayRequests())));
         }
 
+    }
+
+    public int getRequestCountBelowFree(Range range) {
+        return freeRequestDistribution.getRequestCountBelow(range);
+    }
+    public int getRequestCountBelowPay(Range range) {
+        return payRequestDistribution.getRequestCountBelow(range);
     }
 
     /**
@@ -214,12 +221,19 @@ public class Speciality {
      * @param range диапазон
      */
     public int getRequestCountBelow(Range range) {
-        return freeRequestDistribution.getRequestCountBelow(range) +
-            payRequestDistribution.getRequestCountBelow(range);
+        return getRequestCountBelowFree(range) + getRequestCountBelowPay(range);
     }
 
     public int getRequestCountBelow311() {
         return getRequestCountBelow(new Range(320, 311));
+    }
+
+    public int getRequestCountBelow311Free() {
+        return getRequestCountBelowFree(new Range(320, 311));
+    }
+
+    public int getRequestCountBelow311Pay() {
+        return getRequestCountBelowPay(new Range(320, 311));
     }
 
     @Override

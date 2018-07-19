@@ -26,7 +26,7 @@
         <td th:text="${fpmi.getRequestFree()}">0</td>
         <td th:text="${fpmi.getFreePass()}">0</td>
         <td th:text="${fpmi.getRequestsBeyondPassFree()}">0</td>
-        <td th:text="${fpmi.getRequestCountBelow311()}">0</td>
+        <td th:text="${fpmi.getRequestCountBelow311Free()}">0</td>
     </tr>
     <tr>
         <td>Платное</td>
@@ -34,6 +34,7 @@
         <td th:text="${fpmi.getRequestPay()}">0</td>
         <td th:text="${fpmi.getPayPass()}">0</td>
         <td th:text="${fpmi.getRequestsBeyondPassPay()}">0</td>
+        <td th:text="${fpmi.getRequestCountBelow311Pay()}">0</td>
     </tr>
 </table>
 
@@ -43,7 +44,8 @@
         <th>Заявок (б/п)</th>
         <th>Проходной (б/п)</th>
         <th>Не проходят (б/п)</th>
-        <th>< 311</th>
+        <th>< 311 б</th>
+        <th>< 311 п</th>
         <th>Специальность</th>
     </tr>
     <tr th:each="speciality : ${fpmi.getSpecialitiesByPopularity()}">
@@ -67,7 +69,8 @@
             <span>/</span>
             <span th:text="${speciality.getRequestsBeyondPassPay()}"></span>
         </td>
-        <td th:text="${speciality.getRequestCountBelow311()}">0</td>
+        <td th:text="${speciality.getRequestCountBelow311Free()}">0</td>
+        <td th:text="${speciality.getRequestCountBelow311Pay()}">0</td>
 
         <td th:text="${speciality.getName()}">0</td>
     </tr>
@@ -91,7 +94,7 @@
         <td th:text="${mexmat.getRequestFree()}">0</td>
         <td th:text="${mexmat.getFreePass()}">0</td>
         <td th:text="${mexmat.getRequestsBeyondPassFree()}">0</td>
-        <td th:text="${mexmat.getRequestCountBelow311()}">0</td>
+        <td th:text="${mexmat.getRequestCountBelow311Free()}">0</td>
     </tr>
     <tr>
         <td>Платное</td>
@@ -99,6 +102,7 @@
         <td th:text="${mexmat.getRequestPay()}">0</td>
         <td th:text="${mexmat.getPayPass()}">0</td>
         <td th:text="${mexmat.getRequestsBeyondPassPay()}">0</td>
+        <td th:text="${mexmat.getRequestCountBelow311Pay()}">0</td>
     </tr>
 </table>
 
@@ -108,7 +112,8 @@
         <th>Заявок (б/п)</th>
         <th>Проходной (б/п)</th>
         <th>Не проходят (б/п)</th>
-        <th>< 311</th>
+        <th>< 311 б</th>
+        <th>< 311 п</th>
         <th>Специальность</th>
     </tr>
     <tr th:each="speciality : ${mexmat.getSpecialitiesByPopularity()}">
@@ -132,7 +137,8 @@
             <span>/</span>
             <span th:text="${speciality.getRequestsBeyondPassPay()}"></span>
         </td>
-        <td th:text="${speciality.getRequestCountBelow311()}">0</td>
+        <td th:text="${speciality.getRequestCountBelow311Free()}">0</td>
+        <td th:text="${speciality.getRequestCountBelow311Pay()}">0</td>
 
         <td th:text="${speciality.getName()}">0</td>
     </tr>
