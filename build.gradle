@@ -37,3 +37,12 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 }
+
+task deploy {
+    doLast {
+        copy {
+            from(new File(buildDir, "libs/bsumonitor-${version}.jar"))
+            into("${projectDir}/docker")
+        }
+    }
+}
